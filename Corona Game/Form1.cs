@@ -79,9 +79,9 @@ namespace Corona_Game
                 return false;
             if (p2.Location.X + p2.Width / 2 < p1.Location.X)
                 return false;
-            if (p1.Location.Y + p1.Height - 50 < p2.Location.Y)
+            if (p1.Location.Y + p1.Height < p2.Location.Y)
                 return false;
-            if (p2.Location.Y + p2.Height - 50 < p1.Location.Y)
+            if (p2.Location.Y + p2.Height < p1.Location.Y)
                 return false;
             return true;
         }
@@ -137,13 +137,13 @@ namespace Corona_Game
                         {
 
                             Controls.Remove(injections[i].pic);
-                            Controls.Remove(viruses[j]);
-                            viruses.Remove(viruses[j]);
                             injections.Remove(injections[i]);
                             lblScore.Text = (int.Parse(lblScore.Text) + 1).ToString();
 
                             temp = new PictureBox();
-                            temp.Location = new Point(x,y);
+                            temp.Location = viruses[j].Location;
+                            Controls.Remove(viruses[j]);
+                            viruses.Remove(viruses[j]);
                             temp.Width = 100;
                             temp.Height = 100;
                             temp.SizeMode = PictureBoxSizeMode.StretchImage;
