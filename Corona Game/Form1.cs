@@ -19,13 +19,13 @@ namespace Corona_Game
         }
 
         List<Projectile> injections = new List<Projectile>();
-        List<PictureBox> Viruses = new List<PictureBox>();
-        int v0x, v0y;
+        List<PictureBox> viruses = new List<PictureBox>();
+        List<PictureBox> splashes = new List<PictureBox>();
+
+        int v0x = 30, v0y = 0, y0 = 288;
 
         void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            //int x = picBoxCannon.Location.X;
-            //int y = picBoxCannon.Location.Y;
 
             PictureBox temp;
 
@@ -34,27 +34,43 @@ namespace Corona_Game
                 temp = new PictureBox();
                 temp.Location = picBoxCannon.Location;
                 temp.Image = Properties.Resources.injection;
-                temp.Height = 85;
-                temp.Width = 95;
+                temp.Height = 55;
+                temp.Width = 65;
                 temp.SizeMode = PictureBoxSizeMode.StretchImage;
                 injections.Add(new Projectile(temp));
                 Controls.Add(temp);
+                injections.Last().v0x = v0x;
+                injections.Last().v0y = v0y;
             }
-            //else if (e.KeyCode == Keys.Left)
-            //{
-            //    x -= 30;
-            //}
-            //else if (e.KeyCode == Keys.Space)
-            //{
-            //    fireballs.Add(new PictureBox());    // adding a new fire ball to fire
-            //    fireballs.Last().Image = Properties.Resources.fireball;
-            //    fireballs.Last().Location = picBoxCannon.Location;
-            //    fireballs.Last().Size = picBoxCannon.Size;
-            //    fireballs.Last().SizeMode = PictureBoxSizeMode.StretchImage;
-            //    Controls.Add(fireballs.Last());
-            //}
+            else if (e.KeyCode == Keys.Left)
+            {
+                if (v0x != 5)
+                {
+                    v0x -= 5;
+                }
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                if (v0x != 100)
+                {
+                    v0x += 5;
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (v0y != 100)
+                {
+                    v0y += 5;
+                }
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (v0y != -100)
+                {
+                    v0y -= 5;
+                }
+            }
 
-            //picBoxCannon.Location = new Point(x, y);
         }
 
         private bool IsTouching(PictureBox p1, PictureBox p2)
@@ -72,18 +88,76 @@ namespace Corona_Game
 
         private void tmrCorona_Tick(object sender, EventArgs e)
         {
+            Random rnd = new Random();
+            PictureBox temp = new PictureBox();
+            temp.Location = new Point(rnd.Next(100,Width - 100), rnd.Next(100, Height - 100));
+            temp.Width = 120;
+            temp.Height = 100;
+            temp.SizeMode = PictureBoxSizeMode.StretchImage;
+            temp.Image = Properties.Resources.corona;
+            temp.BackColor = Color.Transparent;
+            viruses.Add(temp);
+            Controls.Add(temp);
+        }
 
+        private void tmrSplashes_Tick(object sender, EventArgs e)
+        {
+            int i = 0;
+            for (i = 0; i < splashes.Count; i++)
+            {
+                splashes[i].Tag = (int.Parse(splashes[i].Tag.ToString()) + 1).ToString();
+                if (splashes[i].Tag.Equals("1"))
+                {
+                    Controls.Remove(splashes[i]);
+                    splashes.RemoveAt(i);
+                }
+            }
         }
 
         private void tmrFire_Tick(object sender, EventArgs e)
         {
             int i, j, x, y;
+            PictureBox temp;
             for (i = 0; i < injections.Count; i++)
             {
-                x = injections[i].pic.Location.X;
-                y = injections[i].pic.Location.Y;
+                x = injections[i].pic.Location.X + injections[i].v0x;
+                y = y0 - injections[i].t * injections[i].v0y + (int)Math.Pow(injections[i].t, 2);
+                injections[i].pic.Location = new Point(x, y);
+                injections[i].t++;
+                if (injections[i].pic.Location.X > Width | injections[i].pic.Location.Y > Height )
+                {
+                    Controls.Remove(injections[i].pic);
+                    injections.Remove(injections[i]);
+                }
+                else
+                {
+                    for (j = 0; j < viruses.Count; j++)
+                    {
+                        if (IsTouching(injections[i].pic, viruses[j]))
+                        {
 
+                            Controls.Remove(injections[i].pic);
+                            Controls.Remove(viruses[j]);
+                            viruses.Remove(viruses[j]);
+                            injections.Remove(injections[i]);
+                            lblScore.Text = (int.Parse(lblScore.Text) + 1).ToString();
+
+                            temp = new PictureBox();
+                            temp.Location = new Point(x,y);
+                            temp.Width = 100;
+                            temp.Height = 100;
+                            temp.SizeMode = PictureBoxSizeMode.StretchImage;
+                            temp.Image = Properties.Resources.splash;
+                            temp.Tag = "0";
+                            Controls.Add(temp);
+                            splashes.Add(temp);
+                            break;
+                        }
+                    }
+                }
             }
+
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)

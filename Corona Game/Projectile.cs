@@ -15,6 +15,8 @@ namespace Corona_Game
     {
         public PictureBox pic;
         public int t;
+        public int v0x;
+        public int v0y;
 
         public Projectile(PictureBox p)
         {
