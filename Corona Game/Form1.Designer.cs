@@ -32,8 +32,8 @@
             this.tmrCorona = new System.Windows.Forms.Timer(this.components);
             this.tmrFire = new System.Windows.Forms.Timer(this.components);
             this.lblScore = new System.Windows.Forms.Label();
-            this.picBoxCannon = new System.Windows.Forms.PictureBox();
             this.tmrSplashes = new System.Windows.Forms.Timer(this.components);
+            this.picBoxCannon = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picBoxCannon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,21 +59,21 @@
             this.lblScore.TabIndex = 1;
             this.lblScore.Text = "0";
             // 
-            // picBoxCannon
-            // 
-            this.picBoxCannon.Image = global::Corona_Game.Properties.Resources.cannon;
-            this.picBoxCannon.Location = new System.Drawing.Point(12, 288);
-            this.picBoxCannon.Name = "picBoxCannon";
-            this.picBoxCannon.Size = new System.Drawing.Size(189, 90);
-            this.picBoxCannon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picBoxCannon.TabIndex = 0;
-            this.picBoxCannon.TabStop = false;
-            // 
             // tmrSplashes
             // 
             this.tmrSplashes.Enabled = true;
             this.tmrSplashes.Interval = 1000;
             this.tmrSplashes.Tick += new System.EventHandler(this.tmrSplashes_Tick);
+            // 
+            // picBoxCannon
+            // 
+            this.picBoxCannon.Image = global::Corona_Game.Properties.Resources.cannonSi;
+            this.picBoxCannon.Location = new System.Drawing.Point(12, 241);
+            this.picBoxCannon.Name = "picBoxCannon";
+            this.picBoxCannon.Size = new System.Drawing.Size(200, 200);
+            this.picBoxCannon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBoxCannon.TabIndex = 0;
+            this.picBoxCannon.TabStop = false;
             // 
             // Form1
             // 
