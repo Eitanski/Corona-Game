@@ -54,6 +54,7 @@ namespace Corona_Game
                 if (v0x != 5)
                 {
                     v0x -= 5;
+                    progressBarX.Increment(-5);
                 }
             }
             else if (e.KeyCode == Keys.Right)
@@ -61,22 +62,25 @@ namespace Corona_Game
                 if (v0x != 100)
                 {
                     v0x += 5;
+                    progressBarX.Increment(5);
                 }
             }
             else if (e.KeyCode == Keys.Up)
             {
-                if (v0y != 100)
+                if (v0y != 90)
                 {
                     v0y += 5;
                     picBoxCannon.Image = RotateImage(picBoxCannon.Image, -5);
+                    progressBarY.Increment(5);
                 }
             }
             else if (e.KeyCode == Keys.Down)
             {
-                if (v0y != -100)
+                if (v0y != -90)
                 {
                     v0y -= 5;
                     picBoxCannon.Image = RotateImage(picBoxCannon.Image, 5);
+                    progressBarY.Increment(-5);
                 }
             }
 
@@ -151,6 +155,16 @@ namespace Corona_Game
                     splashes.RemoveAt(i);
                 }
             }
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void progressBarX_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void tmrFire_Tick(object sender, EventArgs e)
